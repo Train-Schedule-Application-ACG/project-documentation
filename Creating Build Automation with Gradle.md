@@ -51,40 +51,41 @@ Once we have the Git repository cloned to our home directory, let's cd into the 
 `ls -la`
 
 ## Create a Gradle Build
-We have to create a Gradle build, but before that we have to install Gradle itself. That won't be too difficult though, because there's a Gradle wrapper included in the repository. This is essentially a collection of scripts that will install Gradle all by itself. As long as we have Java 7 or later installed, we're good to go. This will make it much easier to install Gradle and run the build of our train scheduling app. There's a file in this repository called gradlew, and that is what we'll use to install Gradle and run gradle commands. To get that process moving, let's build Gradle by executing that script:
+To create a Gradle build, we have to install Gradle if this is the first time installation. 
 
-[cloud_user@$host]$ ./gradlew build
-When we run it, we'll see that it's actually installing Gradle. That will only happen this first time though, because Gradle isn't currently installed on our system. The script doesn't do much else, because we haven't actually set up the build yet.
+However, as there's a Gradle wrapper included in the repository installing Gradle won't be necessary everytime. Gradle wrapper is nothing but a collection of scripts that will install Gradle all by itself. As long as we have Java 7 or later installed, we're good to go. 
 
-The next thing we have to do is to initialize the Gradle build:
+There's a file in this repository called gradlew, and that is what we'll use to install Gradle and run gradle commands. To get that process moving, let's build Gradle by executing that script:
 
-[cloud_user@$host]$ ./gradlew init
-If we check with another ls -la command, we'll now see a build.gradle file that wasn't there before. We're going to edit that file (with whatever text editor you prefer -- vi, nano, emacs, etc) and delete what's in there now. The current text is just a comment anyway, so we don't need it. When we're done, the file should look like this (here with comments to explain things, then below that just the required lines):
+To install Gradle run, `./gradlew build` 
 
-With comments
+Once Gradle is installed, initialize the Gradle build by `./gradlew init`
 
-// This application is built in node.js, and there is a plugin for it in Gradle that does
-// a lot of the work for us as far as dealing with node.js builds. We're calling in that
-// plugin here
+Check the files by `ls -la` and you'll see a build.gradle file. 
+
+Since this project is built on node.js, we're installing a supporting Plugin for node.js builds.
+
+```bash
 plugins {
   id("com.github.node-gradle.node") version "2.2.4"
 }
 
-// We've also got to confgure the plugin a little bit. This line will instruct the node plugin
-// to download and install node.js and npm locally, for this particular project. It ensures that
-// those are installed during the build, but not system-wide, just within this directory.
+// Confgure the plugin so that the system downloads and installs node.js and npm locally but not system-wide. 
+
+directory.
 node {
   version    = '9.11.2'
   download = true
 }
 
-// Whenever we call the build task (it's a task called build) which will run any and all
-// other tasks that are required to actually call the build "built."
-task build
+// By calling the task named "Build task" it will run any and all other tasks that are required to actually call the build "built."
 
 // All we need to do, in order for this build to actually run, is to call some of the tasks
 // built in to the node.js and npm plugins. We're going to call them here.
 build.dependsOn npm_build
+```
+**/////////////////////////////////////////////////////**
+
 Without comments:
 
 plugins {
